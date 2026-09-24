@@ -224,13 +224,13 @@ Object creation is centralized in one place.
 ### 1. Compile
 
 ```bash
-javac Main.java
+javac FactoryPattern.java
 ```
 
 ### 2. Run
 
 ```bash
-java Main
+java FactoryPattern
 ```
 
 ---
@@ -252,3 +252,303 @@ Factory Pattern
 ```
 
 It is a beginner-friendly example of applying **object-oriented programming and design patterns in Java**.
+
+
+
+# 💳 Payment Factory – Python
+
+A simple Python project demonstrating the **Factory Design Pattern** using **Abstract Base Classes (ABC)**, inheritance, and polymorphism.
+
+The project models different payment methods such as **SBI, HDFC, Paytm, and PhonePe**. A factory class is responsible for creating the appropriate payment object based on the method provided.
+
+---
+
+## 📌 Overview
+
+Instead of directly creating payment objects:
+
+```python
+sbi = SBI()
+phonepe = PhonePe()
+```
+
+the client uses the factory:
+
+```python
+payment = PaymentFactory.create("sbi")
+payment.pay()
+```
+
+The factory decides which concrete class should be instantiated.
+
+---
+
+## 🏗️ Project Structure
+
+```text
+Payment
+   │
+   ├── Credit
+   │     ├── SBI
+   │     └── HDFC
+   │
+   └── UPI
+         ├── Paytm
+         └── PhonePe
+
+PaymentFactory
+       │
+       └── create()
+```
+
+---
+
+## 🔑 Concepts Demonstrated
+
+### 1. Abstract Base Class
+
+Python does not have a dedicated `interface` keyword like Java.
+
+Instead, an interface-like structure can be created using `ABC` and `@abstractmethod`.
+
+```python
+from abc import ABC, abstractmethod
+
+class Payment(ABC):
+
+    @abstractmethod
+    def pay(self):
+        pass
+```
+
+Any concrete payment class must implement `pay()`.
+
+---
+
+### 2. Interface Inheritance
+
+`Credit` and `UPI` inherit from `Payment`.
+
+```python
+class Credit(Payment):
+
+    @abstractmethod
+    def pay(self):
+        pass
+```
+
+```python
+class UPI(Payment):
+
+    @abstractmethod
+    def pay(self):
+        pass
+```
+
+The hierarchy becomes:
+
+```text
+Payment
+   │
+   ├── Credit
+   │     ├── SBI
+   │     └── HDFC
+   │
+   └── UPI
+         ├── Paytm
+         └── PhonePe
+```
+
+---
+
+## 3. Concrete Implementations
+
+Each payment class provides its own implementation of `pay()`.
+
+```python
+class SBI(Credit):
+
+    def pay(self):
+        print("Payment done through SBI")
+```
+
+```python
+class PhonePe(UPI):
+
+    def pay(self):
+        print("Payment done through PhonePe")
+```
+
+This demonstrates **polymorphism** because different objects respond differently to the same method call.
+
+---
+
+## 4. Factory
+
+The `PaymentFactory` handles object creation.
+
+```python
+class PaymentFactory:
+
+    @staticmethod
+    def create(method):
+
+        if method == "sbi":
+            return SBI()
+
+        elif method == "hdfc":
+            return HDFC()
+
+        elif method == "paytm":
+            return Paytm()
+
+        elif method == "phonepe":
+            return PhonePe()
+
+        return None
+```
+
+The client does not need to know how the payment objects are created.
+
+---
+
+## 🚀 Usage
+
+```python
+s1 = PaymentFactory.create("sbi")
+s1.pay()
+
+s2 = PaymentFactory.create("phonepe")
+s2.pay()
+```
+
+### Output
+
+```text
+Payment done through SBI
+Payment done through PhonePe
+```
+
+---
+
+## 🔄 How the Factory Works
+
+For:
+
+```python
+payment = PaymentFactory.create("sbi")
+```
+
+the flow is:
+
+```text
+Client
+  │
+  │ "sbi"
+  ↓
+PaymentFactory
+  │
+  │ create()
+  ↓
+SBI()
+  │
+  ↓
+Payment object
+  │
+  ↓
+pay()
+```
+
+---
+
+## 🧠 Why Use the Factory Pattern?
+
+Without a factory:
+
+```python
+sbi = SBI()
+hdfc = HDFC()
+paytm = Paytm()
+phonepe = PhonePe()
+```
+
+The client directly creates concrete objects.
+
+With the factory:
+
+```python
+payment = PaymentFactory.create("sbi")
+```
+
+Object creation is centralized.
+
+### Benefits
+
+* Centralizes object creation
+* Reduces direct dependency on concrete classes
+* Supports polymorphism
+* Makes the code easier to extend
+* Separates object creation from object usage
+
+---
+
+## 🆚 Java vs Python
+
+| Java                   | Python               |
+| ---------------------- | -------------------- |
+| `interface Payment`    | `class Payment(ABC)` |
+| `extends`              | Inheritance          |
+| `implements`           | Inheritance from ABC |
+| `void pay()`           | `def pay(self)`      |
+| `method.equals("sbi")` | `method == "sbi"`    |
+| `new SBI()`            | `SBI()`              |
+| `static create()`      | `@staticmethod`      |
+| Explicit variable type | Dynamic typing       |
+
+---
+
+## 🛠️ Technologies
+
+* Python 3
+* Abstract Base Classes (`abc`)
+* Object-Oriented Programming
+* Inheritance
+* Polymorphism
+* Factory Design Pattern
+
+---
+
+## 📚 Learning Outcome
+
+This project demonstrates how Python can implement an interface-like design using abstract base classes and how the Factory Pattern can be combined with polymorphism.
+
+```text
+ABC / Interface
+       ↓
+Inheritance
+       ↓
+Concrete Classes
+       ↓
+Polymorphism
+       ↓
+Factory
+       ↓
+Object Creation
+```
+
+---
+
+## ▶️ How to Run
+
+Save the code as:
+
+```text
+PaymentFactory.py
+```
+
+Run:
+
+```bash
+python PaymentFactory.py
+```
+
